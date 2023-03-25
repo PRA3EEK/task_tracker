@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,19 +19,21 @@ import com.task_tracker.entities.Project;
 import com.task_tracker.services.ProjectService;
 
 @RestController
+@RequestMapping
 @CrossOrigin(origins = "*")
 public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 
 	@PostMapping("project/add")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Project> createProjectHandler(@RequestParam("title") String title){
 		return new ResponseEntity<Project>(projectService.createProject(title), HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8899")
 	@GetMapping("project/all")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<List<Project>> getAllProjectsOfAUserHandler(){
 		return new ResponseEntity<List<Project>>(projectService.getAllProjectsOfAUser(), HttpStatus.FOUND);
 	}

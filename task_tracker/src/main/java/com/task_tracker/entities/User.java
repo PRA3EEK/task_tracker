@@ -28,7 +28,7 @@ public class User {
 	private String lastName;
 	private String email;
 	private String password;
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	List<Project> projects = new ArrayList<>();
 	
 }

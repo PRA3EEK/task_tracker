@@ -17,6 +17,9 @@ import com.task_tracker.repositories.UserRepo;
 public class ProjectServiceImpl implements ProjectService{
 
 	@Autowired
+	private GetPrinciple getPrinciple;
+	
+	@Autowired
 	private ProjectRepo projectRepo;
 	
 	@Autowired
@@ -25,7 +28,9 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public Project createProject(String title) {
 		// TODO Auto-generated method stub
+		User user = getPrinciple.getLoggedInUser();
 		Project project = new Project();
+		project.setUser(user);
 		project.setTitle(title);
 		return projectRepo.save(project);
 	}
@@ -33,8 +38,7 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public List<Project> getAllProjectsOfAUser() {
 		// TODO Auto-generated method stub
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user  = userRepo.findByUsername(username);
+		User user = getPrinciple.getLoggedInUser();
 		return user.getProjects();
 	}
 

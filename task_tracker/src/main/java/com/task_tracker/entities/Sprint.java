@@ -28,6 +28,8 @@ public class Sprint {
 	private Integer weeks;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	@OneToMany
+	@OneToMany(mappedBy = "sprint")
 	List<Task> sprintTasks = new ArrayList<>();
+	@ManyToOne
+	private Project project;
 }

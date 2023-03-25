@@ -3,6 +3,7 @@ package com.task_tracker.securityConfig;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -93,5 +94,15 @@ public class CustomUserDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	@Override
+	  public boolean equals(Object o) {
+	    if (this == o)
+	      return true;
+	    if (o == null || getClass() != o.getClass())
+	      return false;
+	    CustomUserDetails user = (CustomUserDetails) o;
+	    return Objects.equals(id, user.id);
+	  }
 
 }

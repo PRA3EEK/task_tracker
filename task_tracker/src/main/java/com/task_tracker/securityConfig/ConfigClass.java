@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.task_tracker.JWTConfig.AuthEntryPointJWT;
 import com.task_tracker.JWTConfig.AuthTokenFilter;
@@ -38,6 +40,7 @@ public class ConfigClass {
 		return authenticationProvider;
 	}
 	
+
 	@Bean
 	SecurityFilterChain httpRequestHandling(HttpSecurity http) throws Exception {
 		

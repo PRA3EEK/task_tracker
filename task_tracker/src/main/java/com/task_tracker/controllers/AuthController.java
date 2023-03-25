@@ -23,7 +23,7 @@ import com.task_tracker.services.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class AuthController {
 
 	@Autowired

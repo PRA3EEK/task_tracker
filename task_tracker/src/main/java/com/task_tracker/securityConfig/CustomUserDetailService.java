@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.task_tracker.entities.User;
 import com.task_tracker.repositories.UserRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class CustomUserDetailService implements UserDetailsService{
 
 	@Autowired

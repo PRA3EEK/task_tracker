@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.task_tracker.entities.Project;
 import com.task_tracker.entities.Sprint;
+import com.task_tracker.entities.Task;
 import com.task_tracker.exceptions.ProjectNotFoundException;
+import com.task_tracker.exceptions.SprintNotfoundException;
+import com.task_tracker.exceptions.TaskNotFoundException;
 import com.task_tracker.repositories.ProjectRepo;
 import com.task_tracker.repositories.SprintRepo;
+import com.task_tracker.repositories.TaskRepo;
 import com.task_tracker.requests.CreateSprintRequest;
 
 @Service
@@ -21,6 +25,9 @@ public class SprintServiceImpl implements SprintService{
 	
 	@Autowired
 	private SprintRepo sprintRepo;
+	
+	@Autowired
+	private TaskRepo taskRepo;
 
 	@Override
 	public Sprint createSprint(Long projectId, CreateSprintRequest request) throws ProjectNotFoundException {
@@ -38,6 +45,62 @@ public class SprintServiceImpl implements SprintService{
 		sprint.setProject(project);
 		return sprintRepo.save(sprint);
 	}
+
+	@Override
+	public Sprint addTaskToASprint(Long sprintId, Long taskId) throws SprintNotfoundException, TaskNotFoundException {
+		// TODO Auto-generated method stub
+		
+		Optional<Sprint> sprintO = sprintRepo.findById(sprintId);
+		
+		if(sprintO.isPresent()) {
+			Sprint sprint = sprintO.get();
+			Optional<Task> taskO = taskRepo.findById(taskId);
+			if(taskO.isPresent()) {
+				Task task = taskO.get();
+				sprint.getSprintTasks().add(task);
+				task.setSprint(sprint);
+				return sprintRepo.save(sprint);
+			}
+			throw new TaskNotFoundException("Task not found with the id "+taskId);
+		}
+		
+		throw new SprintNotfoundException("No sprint found with the sprintId "+sprintId);
+	}
+
+	@Override
+	public Sprint getSprint(Long sprintId) throws SprintNotfoundException {
+		// TODO Auto-generated method stub
+		Optional<Sprint> sprintO = sprintRepo.findById(sprintId);
+		if(sprintO.isPresent()) {
+			
+			return sprintO.get();
+			
+		}
+		throw new SprintNotfoundException("No sprint found with the id "+sprintId);
+	}
+
+	@Override
+	public Sprint deleteTaskFromSprint(Long sprintId, Long taskId)
+			throws SprintNotfoundException, TaskNotFoundException {
+		// TODO Auto-generated method stub
+		Sprint sprint = getSprintById(sprintId);
+		if(sprint == null) throw new SprintNotfoundException("No sprint fount with the id "+sprintId);
+		Optional<Task> taskO = taskRepo.findById(taskId);
+		if(!taskO.isPresent()) throw new TaskNotFoundException("No task found with the id "+taskId);
+		Task task = taskO.get();
+		task.setSprint(null);
+	  taskRepo.save(task);
+	  return sprint;
+	}
+	
+	
+	private Sprint getSprintById(Long sprintId) {
+		Optional<Sprint> sprintO = sprintRepo.findById(sprintId);
+		if(sprintO.isPresent()) return sprintO.get();
+		return null;
+	}
+	
+	
 	
 	
 	

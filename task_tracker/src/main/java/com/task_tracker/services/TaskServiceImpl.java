@@ -126,6 +126,14 @@ public class TaskServiceImpl implements TaskService{
 		return taskRepo.findById(id).get();
 	}
 
+	@Override
+	public Task getTask(Long taskId) throws TaskNotFoundException {
+		// TODO Auto-generated method stub
+		Task task = getTask(taskId);
+		if(task == null) throw new TaskNotFoundException("Task not found with the id "+taskId);
+		return task;
+	}
+
 	
 	
 }

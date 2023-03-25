@@ -21,4 +21,6 @@ public interface TaskService {
 	
 	public Task updateDueDate(Long taskId, String date) throws TaskNotFoundException;
 	
+	public Task getTask(Long taskId) throws TaskNotFoundException;
+	
 }

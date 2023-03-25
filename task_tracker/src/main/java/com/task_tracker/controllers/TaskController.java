@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,4 +63,9 @@ public class TaskController {
 		return new ResponseEntity<Task>(taskService.updateDueDate(taskId, dueDate), HttpStatus.CREATED);
 	}
 	
+	@GetMapping("/task")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Task> getTaskHandler(@RequestParam("taskId") Long taskId) throws TaskNotFoundException{
+		return new ResponseEntity<Task>(taskService.getTask(taskId), HttpStatus.FOUND);
+	}
 }

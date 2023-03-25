@@ -5,6 +5,11 @@ package com.task_tracker.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +27,10 @@ public class Project {
  	private Long projectId;
 	private String title;
 	@OneToMany
+	@JsonIgnore
 	private List<Task> tasks = new ArrayList<>();
 	@OneToMany
+	@JsonIgnore
 	private List<Sprint> sprints = new ArrayList<>();
 
 	

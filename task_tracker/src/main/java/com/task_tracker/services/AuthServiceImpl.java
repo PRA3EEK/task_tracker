@@ -21,6 +21,7 @@ import com.task_tracker.requests.SignUpRequest;
 import com.task_tracker.securityConfig.CustomUserDetails;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.validation.Valid;
 
 @Service
 public class AuthServiceImpl implements AuthService{
@@ -69,5 +70,6 @@ public class AuthServiceImpl implements AuthService{
 		
 		return cookie;
 	}
+	
 
 }

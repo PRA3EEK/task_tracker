@@ -88,6 +88,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>task-tracker-application</finalName>
 	</build>
 
 </project>

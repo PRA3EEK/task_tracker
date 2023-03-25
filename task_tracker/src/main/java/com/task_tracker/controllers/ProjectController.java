@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.task_tracker.entities.Project;
+import com.task_tracker.exceptions.ProjectNotFoundException;
 import com.task_tracker.services.ProjectService;
 
 @RestController
@@ -40,7 +41,7 @@ public class ProjectController {
 	
 	@DeleteMapping("project/delete")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Project> deleteProjectHandler(@RequestParam("projectId") Long projectId){
+	public ResponseEntity<Project> deleteProjectHandler(@RequestParam("projectId") Long projectId) throws ProjectNotFoundException{
 		return new ResponseEntity<Project>(projectService.deleteProject(projectId), HttpStatus.OK);
 	}
 }

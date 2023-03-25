@@ -129,9 +129,9 @@ public class TaskServiceImpl implements TaskService{
 	@Override
 	public Task getTask(Long taskId) throws TaskNotFoundException {
 		// TODO Auto-generated method stub
-		Task task = getTask(taskId);
-		if(task == null) throw new TaskNotFoundException("Task not found with the id "+taskId);
-		return task;
+		Optional<Task> taskO = taskRepo.findById(taskId);
+		if(taskO.isPresent()) return taskO.get();
+		throw new TaskNotFoundException("No task found with the id "+taskId);
 	}
 
 	

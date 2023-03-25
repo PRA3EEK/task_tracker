@@ -9,7 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.task_tracker.entities.Project;
+import com.task_tracker.entities.Sprint;
+import com.task_tracker.entities.Task;
 import com.task_tracker.entities.User;
+import com.task_tracker.exceptions.ProjectNotFoundException;
 import com.task_tracker.repositories.ProjectRepo;
 import com.task_tracker.repositories.UserRepo;
 
@@ -43,7 +46,7 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public Project deleteProject(Long projectId) {
+	public Project deleteProject(Long projectId) throws ProjectNotFoundException {
 		// TODO Auto-generated method stub
 		Optional<Project> projectO = projectRepo.findById(projectId);
 		if(projectO.isPresent()) {
@@ -51,7 +54,24 @@ public class ProjectServiceImpl implements ProjectService{
 			projectRepo.delete(project);
 			return project;
 		}
-		return null;
+       throw new ProjectNotFoundException("No project found with the id "+projectId);
+	}
+
+	@Override
+	public List<Task> getAllTasks(Long projectId) throws ProjectNotFoundException {
+		// TODO Auto-generated method stub
+		Optional<Project> projectO = projectRepo.findById(projectId);
+		if(projectO.isPresent())
+			return projectO.get().getTasks();
+		throw new ProjectNotFoundException("No project found with the id "+projectId);
+	}
+
+	@Override
+	public List<Sprint> getAllSprints(Long projectId) throws ProjectNotFoundException {
+		Optional<Project> projectO = projectRepo.findById(projectId);
+		if(projectO.isPresent())
+			return projectO.get().getSprints();
+		throw new ProjectNotFoundException("No project found with the id "+projectId);
 	}
 	
 

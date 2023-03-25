@@ -48,7 +48,7 @@ public class ConfigClass {
 		.exceptionHandling().authenticationEntryPoint(authEntryPoint)
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeHttpRequests().requestMatchers("/signup/**", "/login/**").permitAll()
+		.authorizeHttpRequests().requestMatchers("/signup/**", "/login/**", "/**").permitAll()
 		.anyRequest().authenticated();
 	
 		http.authenticationProvider(authenticationProvider());

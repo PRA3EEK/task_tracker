@@ -134,6 +134,30 @@ public class TaskServiceImpl implements TaskService{
 		throw new TaskNotFoundException("No task found with the id "+taskId);
 	}
 
+	@Override
+	public Task addComment(Long taskId, String comment, Long userId) throws TaskNotFoundException, UserException {
+		Optional<Task> taskO = taskRepo.findById(taskId);
+		if(taskO.isPresent()) {
+			Task task = taskO.get();
+			Optional<User> userO =  userRepo.findById(userId);
+			if(userO.isPresent()) {
+				task.getComments().put(comment, userId);
+				return taskRepo.save(task);
+			}
+			throw new UserException("No user found with the id "+userId);
+		}
+		throw new TaskNotFoundException("No task found with the id "+taskId);
+	}
+
+	@Override
+	public Task updateTask(Task task) throws UserException {
+		Long assignee = task.getAssignee();
+		Optional<User> userO = userRepo.findById(assignee);
+		if(userO.isPresent())
+		return taskRepo.save(task);
+		throw new UserException("User not found!");
+	}
+
 	
 	
 }

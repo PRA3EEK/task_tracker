@@ -70,6 +70,14 @@ public class AuthServiceImpl implements AuthService{
 		
 		return cookie;
 	}
+
+	@Override
+	public ResponseCookie logout() throws UserException {
+
+		     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+		     return cookie;
+		
+	}
 	
 
 }

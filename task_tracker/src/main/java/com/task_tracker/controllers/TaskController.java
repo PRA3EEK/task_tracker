@@ -17,8 +17,11 @@ import com.task_tracker.entities.Task;
 import com.task_tracker.exceptions.ProjectNotFoundException;
 import com.task_tracker.exceptions.TaskNotFoundException;
 import com.task_tracker.exceptions.UserException;
+import com.task_tracker.requests.CommentRequest;
 import com.task_tracker.requests.CreateTaskRequest;
 import com.task_tracker.services.TaskService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -67,5 +70,17 @@ public class TaskController {
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Task> getTaskHandler(@RequestParam("taskId") Long taskId) throws TaskNotFoundException{
 		return new ResponseEntity<Task>(taskService.getTask(taskId), HttpStatus.FOUND);
+	}
+	
+	@PostMapping("/task/comment")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Task> addComment(@RequestParam("taskId") Long taskId, @Valid @RequestBody CommentRequest request) throws TaskNotFoundException, UserException{
+	 return new ResponseEntity<Task>(taskService.addComment(taskId, request.getComment(), request.getUserId()), HttpStatus.CREATED);	
+	}
+	
+	@PutMapping("/task/update")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Task> updateTask(@RequestBody Task task) throws UserException{
+		return new ResponseEntity<Task>(taskService.updateTask(task), HttpStatus.ACCEPTED);
 	}
 }

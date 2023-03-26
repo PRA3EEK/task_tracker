@@ -23,4 +23,8 @@ public interface TaskService {
 	
 	public Task getTask(Long taskId) throws TaskNotFoundException;
 	
+	public Task addComment(Long taskId, String comment, Long userId) throws TaskNotFoundException, UserException;
+	
+	public Task updateTask(Task task) throws UserException;
+	
 }

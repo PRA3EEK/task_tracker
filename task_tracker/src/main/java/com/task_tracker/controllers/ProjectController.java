@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.task_tracker.entities.Project;
+import com.task_tracker.entities.Sprint;
+import com.task_tracker.entities.Task;
 import com.task_tracker.exceptions.ProjectNotFoundException;
 import com.task_tracker.services.ProjectService;
 
@@ -32,7 +34,6 @@ public class ProjectController {
 		return new ResponseEntity<Project>(projectService.createProject(title), HttpStatus.CREATED);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8899")
 	@GetMapping("project/all")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<List<Project>> getAllProjectsOfAUserHandler(){
@@ -43,5 +44,19 @@ public class ProjectController {
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Project> deleteProjectHandler(@RequestParam("projectId") Long projectId) throws ProjectNotFoundException{
 		return new ResponseEntity<Project>(projectService.deleteProject(projectId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/project/task")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<List<Task>> getAllTaskHandler(@RequestParam("projectId") Long projectId) throws ProjectNotFoundException{
+	
+		return new ResponseEntity<List<Task>>(projectService.getAllTasks(projectId), HttpStatus.FOUND);
+	}
+	
+	
+	@GetMapping("/project/sprint")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<List<Sprint>> getAllSprintHandler(@RequestParam("projectId") Long projectId) throws ProjectNotFoundException{
+		return new ResponseEntity<List<Sprint>>(projectService.getAllSprints(projectId), HttpStatus.FOUND);
 	}
 }

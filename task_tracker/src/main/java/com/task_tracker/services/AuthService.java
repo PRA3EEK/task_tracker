@@ -14,4 +14,6 @@ public interface AuthService {
 	
 	public ResponseCookie logIn(LoginRequest loginRequest);
 	
+	public ResponseCookie logout() throws UserException;
+	
 }

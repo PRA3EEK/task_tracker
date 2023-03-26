@@ -1,10 +1,12 @@
 package com.task_tracker.services;
 
 import com.task_tracker.entities.Sprint;
+import com.task_tracker.entities.Task;
 import com.task_tracker.exceptions.ProjectNotFoundException;
 import com.task_tracker.exceptions.SprintNotfoundException;
 import com.task_tracker.exceptions.TaskNotFoundException;
 import com.task_tracker.requests.CreateSprintRequest;
+import java.util.List;
 
 public interface SprintService {
 
@@ -15,4 +17,6 @@ public interface SprintService {
 	public Sprint getSprint(Long sprintId) throws SprintNotfoundException;
 	
 	public Sprint deleteTaskFromSprint(Long sprintId, Long taskId) throws SprintNotfoundException, TaskNotFoundException;
+	
+	public List<Task> getAllTasksFromSprint(Long sprintId) throws SprintNotfoundException;
 }

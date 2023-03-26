@@ -1,6 +1,7 @@
 package com.task_tracker.services;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,15 @@ public class SprintServiceImpl implements SprintService{
 		Optional<Sprint> sprintO = sprintRepo.findById(sprintId);
 		if(sprintO.isPresent()) return sprintO.get();
 		return null;
+	}
+
+	@Override
+	public List<Task> getAllTasksFromSprint(Long sprintId) throws SprintNotfoundException {
+       Optional<Sprint> sprintO = sprintRepo.findById(sprintId);
+       if(sprintO.isPresent()) {
+    	   return sprintO.get().getSprintTasks();
+       }
+       throw new SprintNotfoundException("No sprint found with the id "+sprintId);
 	}
 	
 	
